@@ -4,6 +4,10 @@ Easy-to-use AI character generator that can be integrated in any app. It's based
 The code generates a name, back story, description of powers and traits plus the image of the character that is consistent with the description.
 The only input necessary is a string that contains a minimal description (eg. the the class of the character or its species).
 
+# Demo
+
+Check out a live demo of how this works: [AI Character Generator](https://www.nickname-generator.net/blog/fantasy-character-names/)
+
 # How to install
 
 First create a Wrangler project for making a Cloudflare Worker. Follow [this guide](https://developers.cloudflare.com/workers-ai/get-started/workers-wrangler/), which in short means:
