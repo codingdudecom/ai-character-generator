@@ -57,9 +57,11 @@ This URL is setup to respond to `GET` requests. Here are the params:
 
 ## Input parameters
 ***characterType***
+
 A string parameter that describes the RPG character you want to create. Include things like gender, race, class, etc. A good example would be `female elvish warrior`
 
 ***responseType***
+
 Can be either `json` (default) or `html`. 
 
 ## Ouptut (JSON)
