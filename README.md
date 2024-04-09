@@ -35,7 +35,7 @@ binding = "AI"
 npm install --save-dev @cloudflare/ai
 ```
 
-4. Replace the `src/index.ts` file with the `index.ts` file from this repository
+4. Replace the `src/index.ts` file with the `src/index.ts` file from this repository
 
 5. Run your worker locally for testing
 
