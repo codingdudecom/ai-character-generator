@@ -79,7 +79,8 @@ export default {
 
 		const ai = new Ai(env.AI);
 		const llm_model = "@hf/thebloke/zephyr-7b-beta-awq";
-		const txt2img_model = "@cf/lykon/dreamshaper-8-lcm";
+		// const txt2img_model = "@cf/lykon/dreamshaper-8-lcm";
+		const txt2img_model = "@cf/bytedance/stable-diffusion-xl-lightning";
 
 		//stage I - build RPG character story and characteristics
 		const llm_prompt = 
