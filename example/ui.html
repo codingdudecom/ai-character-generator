@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>
+		AI RPG Character Generator
+	</title>
+</head>
+<body>
+<script type="text/javascript">
+	function html_template(data){
+		return `
+			<h2>${data.characterName}<br/><em>${data.characterGender} ${data.characterClass}</em></h2>
+			<img alt="${data.characterName}" src="${data.image}"/>
+			<h3>Origins</h3>
+			<blockquote>${data.characterOrigins}</blockquote>
+			<h3>Powers</h3>
+			<blockquote>${data.characterPowers}</blockquote>
+		`;
+	}
+	function generateCharacter(event){
+		if(!event.submitter.classList.contains("loading")){
+			event.submitter.classList.add("loading");
+			event.submitter.disabled = true;
+		}
+		var charClass = document.getElementById("charClass").value,
+			charRace = document.getElementById("charRace").value,
+			charAlignment = document.getElementById("charAlignment").value,
+			charGender = document.getElementById("charGender").value;
+
+		var characterType = `${charAlignment} ${charGender} ${charClass} ${charRace}`;
+
+		const cf_worker = `[URL_TO_YOUR_CLOUDFLARE_WORKER_AI]?characterType=${characterType}&responseType=json`;
+		fetch(cf_worker)
+			.then(response => response.json())
+			.then(data => {
+				event.submitter.classList.remove("loading");
+				event.submitter.disabled = false;
+				document.getElementById("characterResult").innerHTML = html_template(data);
+			});
+	}
+</script>
+<style type="text/css">
+	.characterGenerator{
+		display: flex;
+		flex-wrap: wrap;
+		margin: 1em 0;
+	}
+	.characterGenerator > fieldset{
+		flex-basis: 100%;
+	}
+	.characterGenerator label{
+		font-weight: bold;
+	}
+	.characterGenerator select,.characterGenerator input{
+		width: 100%;
+	}
+	.characterGenerator input[type='submit']{
+		color: white;
+    border: none;
+    padding: 0.5em;
+    background: #db1eab;
+	}
+	.characterGenerator .loading{
+		animation-name: pulsating;
+  	animation-duration: 1s;
+  	animation-iteration-count: infinite;
+	}
+
+	.characterGenerator #characterResult {
+    padding: 1em;
+    box-shadow: 0 0 0 5px #aee;
+    background: #222;
+    margin: 1em 0;
+    color: #ddd;
+	}
+	.characterGenerator #characterResult:empty
+	{
+	    display:none;
+	}
+
+@keyframes pulsating{
+	from {
+		box-shadow: 0 0 0 #db1eab;
+	}
+
+	to {
+		box-shadow: 0 0 10px #db1eab;
+	}
+}
+</style>
+<h2>RPG Fantasy Character Generator</h2>
+<form onsubmit="generateCharacter(event);return false;" class="characterGenerator">
+	    <fieldset>
+        <legend>Character Information</legend>
+        <label for="charClass">Gender:</label>
+        <select id="charGender" name="charGender" required>
+			    <option value="Female">Female</option>
+			    <option value="Male">Male</option>
+			  </select>
+        <label for="charClass">Class:</label>
+        <select id="charClass" name="charClass" required>
+			    <option value="Monk">Monk</option>
+			    <option value="Paladin">Paladin</option>
+			    <option value="Rogue">Rogue</option>
+			    <option value="Knight">Knight</option>
+			    <option value="Cleric">Cleric</option>
+			    <option value="Necromancer">Necromancer</option>
+			    <option value="Ranger">Ranger</option>
+			    <option value="Thief">Thief</option>
+			    <option value="Archer">Archer</option>
+			    <option value="Assassin">Assassin</option>
+			    <option value="Bard">Bard</option>
+			    <option value="Druid">Druid</option>
+			    <option value="Mage">Mage</option>
+			    <option value="Magician">Magician</option>
+			    <option value="Wizard">Wizard</option>
+			    <option value="Alchemist">Alchemist</option>
+			    <option value="Barbarian">Barbarian</option>
+			    <option value="Fighter">Fighter</option>
+			    <option value="Shaman">Shaman</option>
+			    <option value="Warrior">Warrior</option>
+			    <option value="Champion">Champion</option>
+			    <option value="Enchanter">Enchanter</option>
+			    <option value="Guardian">Guardian</option>
+			    <option value="Healer">Healer</option>
+            <!-- Add more classes as needed -->
+        </select>
+        <label for="charRace">Race:</label>
+        <select id="charRace" name="charRace" required>
+			    <option value="Elf">Elf</option>
+			    <option value="Gnome">Gnome</option>
+			    <option value="Orc">Orc</option>
+			    <option value="Dwarf">Dwarf</option>
+			    <option value="Human">Human</option>
+			    <option value="Goblin">Goblin</option>
+			    <option value="Halfling">Halfling</option>
+			    <option value="Tiefling">Tiefling</option>
+			    <option value="Centaur">Centaur</option>
+			    <option value="Dragonborn">Dragonborn</option>
+			    <option value="Half-elf">Half-elf</option>
+			    <option value="Giant">Giant</option>
+			    <option value="Fairy">Fairy</option>
+			    <option value="Hobgoblin">Hobgoblin</option>
+			    <option value="Kobold">Kobold</option>
+			    <option value="Lizard folk">Lizard folk</option>
+			    <option value="Troll">Troll</option>
+            <!-- Add more races as needed -->
+        </select>
+        <label for="charAlignment">Good or evil:</label>
+        <select id="charAlignment" name="charAlignment" required>
+            <option value="benevolent">Benevolent</option>
+            <option value="neutral">Neutral</option>
+            <option value="malefic">Malefic</option>
+        </select>
+        <br/><br/>
+        <input type="submit" value="Generate">
+			</fieldset>
+			<fieldset id="characterResult"></fieldset>
+			
+</form>
+</body>
+</html>
